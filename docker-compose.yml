@@ -1,18 +1,42 @@
 version: "2.3"
 
 services:
+    postgres:
+        container_name: armai-postgres
+        image: postgres:12
+        environment: &db_env
+          POSTGRES_DB: armai
+          POSTGRES_USER: admin
+          POSTGRES_PASSWORD: admin
+        ports:
+          - 5432:5432
+        volumes:
+          - ./postgresql/schemas:/docker-entrypoint-initdb.d
+          - ./.pgdata:/var/lib/postgresql/data
+        networks:
+          - postgres
+
     armai-container:
         image: ghcr.io/userver-framework/ubuntu-22.04-userver-pg:latest
         privileged: true
-        network_mode: bridge
         environment:
-          - PREFIX=${PREFIX:-~/.local}
-          - CCACHE_DIR=/armai/.ccache
-          - CORES_DIR=/cores
+          <<: *db_env
+          PREFIX: ${PREFIX:-~/.local}
+          CCACHE_DIR: /armai/.ccache
+          CORES_DIR: /cores
         volumes:
           - .:/armai:rw
+          - ${TC_CORES_DIR:-./.cores}:/cores:rw
         ports:
           - 8080:8080
         working_dir: /armai
         entrypoint:
           - ./tests/run_as_user.sh
+        depends_on:
+          - postgres
+        networks:
+          - postgres
+
+networks:
+    postgres:
+        driver: bridge
