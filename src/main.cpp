@@ -9,7 +9,9 @@
 
 #include "hello.hpp"
 
-#include "application/handlers/users/register/view.hpp"
+#include <application/handlers/users/register/view.hpp>
+
+#include <infrastructure/components/repositories/appendRepositories.hpp>
 
 int main(int argc, char* argv[]) {
   auto component_list = userver::components::MinimalServerComponentList()
@@ -22,7 +24,9 @@ int main(int argc, char* argv[]) {
 
   armai::AppendHello(component_list);
   
-  armai::AppendUsersRegister(component_list);
+  armai::application::handlers::AppendUsersRegister(component_list);
+
+  armai::infrastructure::components::AppendUserRepository(component_list);
 
   return userver::utils::DaemonMain(argc, argv, component_list);
 }

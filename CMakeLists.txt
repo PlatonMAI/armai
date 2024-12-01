@@ -5,6 +5,9 @@ project(armai CXX)
 # Adding userver dependency
 find_package(userver COMPONENTS core postgresql QUIET)
 if(NOT userver_FOUND)  # Fallback to subdirectory usage
+    # Enable userver libraries that are needed in this project
+    set(USERVER_FEATURE_POSTGRESQL ON CACHE BOOL "" FORCE)
+
     # Compatibility mode: some systems don't support these features
     set(USERVER_FEATURE_CRYPTOPP_BLAKE2 OFF CACHE BOOL "" FORCE)
     set(USERVER_FEATURE_GRPC_CHANNELZ OFF CACHE BOOL "" FORCE)
@@ -26,10 +29,35 @@ add_library(${PROJECT_NAME}_objs OBJECT
     src/hello.hpp
     src/hello.cpp
 
+
     src/application/handlers/users/register/view.hpp
     src/application/handlers/users/register/view.cpp
+
+    src/application/dto/users/userRegisterCommand.hpp
+
+    src/application/mappers/users/requestToUserRegisterCommand.hpp
+    src/application/mappers/users/requestToUserRegisterCommand.cpp
+
+    
+    src/infrastructure/repositories/users/userRepository.hpp
+    src/infrastructure/repositories/users/userRepository.cpp
+    src/infrastructure/repositories/users/userRepositoryPostgres.hpp
+    src/infrastructure/repositories/users/userRepositoryPostgres.cpp
+    
+    src/infrastructure/components/repositories/appendRepositories.hpp
+    src/infrastructure/components/repositories/appendRepositories.cpp
+    src/infrastructure/components/repositories/userRepositoryComponent.hpp
+    src/infrastructure/components/repositories/userRepositoryComponent.cpp
+    
+    src/infrastructure/queries/users/usersRead.hpp
+
+
+    src/domain/domain.hpp
+    src/domain/domain.cpp
+
+    src/domain/users/user.hpp
+    src/domain/users/users.hpp
 )
-target_link_libraries(${PROJECT_NAME}_objs PUBLIC userver::core)
 target_link_libraries(${PROJECT_NAME}_objs PUBLIC userver::postgresql)
 
 
@@ -73,3 +101,6 @@ install(FILES ${CONFIGS_FILES} DESTINATION ${CMAKE_INSTALL_SYSCONFDIR}/${PROJECT
 add_subdirectory(third_party/jwt-cpp)
 target_link_libraries(${PROJECT_NAME} PRIVATE jwt-cpp)
 include_directories(third_party/jwt-cpp/include)
+
+# include src
+include_directories(src)

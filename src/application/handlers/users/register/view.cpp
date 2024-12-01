@@ -7,19 +7,22 @@
 #include <userver/components/component_context.hpp>
 #include <userver/formats/json.hpp>
 #include <userver/server/handlers/http_handler_base.hpp>
-#include <userver/storages/postgres/cluster.hpp>
-#include <userver/storages/postgres/component.hpp>
 #include <userver/utils/assert.hpp>
 
 #include <jwt-cpp/jwt.h>
 
-namespace armai {
+#include <application/mappers/users/requestToUserRegisterCommand.hpp>
+
+#include <infrastructure/components/repositories/userRepositoryComponent.hpp>
+
+namespace armai::application::handlers {
 	
 namespace {
 
 class UsersRegister final : public userver::server::handlers::HttpHandlerBase {
 private:
-	userver::storages::postgres::ClusterPtr pg_cluster_;
+	using UserRepository = armai::infrastructure::repositories::UserRepository;
+	std::shared_ptr<UserRepository> userRepository;
 
 public:
 	static constexpr std::string_view kName = "handler-users-register";
@@ -28,13 +31,22 @@ public:
 		const userver::components::ComponentConfig& config,
 		const userver::components::ComponentContext& component_context
 	) : HttpHandlerBase(config, component_context),
-		pg_cluster_(component_context.FindComponent<userver::components::Postgres>("postgres-db").GetCluster()) {}
+		userRepository( component_context.FindComponent<armai::infrastructure::components::UserRepositoryComponent>().GetUserRepository() ) {}
 
 	std::string HandleRequestThrow(
 		const userver::server::http::HttpRequest &request,
 		userver::server::request::RequestContext &
 	) const override {
+		auto &response = request.GetHttpResponse();
+
 		const auto bodyJson = userver::formats::json::FromString(request.RequestBody());
+		const auto userRegisterCommand = mappers::users::getUserRegisterCommand(bodyJson);
+
+		const auto idExistingUser = userRepository->getUserByEmail(userRegisterCommand.email);
+		if (idExistingUser.has_value()) {
+			response.SetStatus(userver::server::http::HttpStatus::kConflict);
+			return {};
+		}
 
 		return bodyJson["name"].As<std::string>();
 	}
