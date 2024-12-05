@@ -16,11 +16,10 @@ public:
     UserRepositoryComponent(
         const userver::components::ComponentConfig& config,
         const userver::components::ComponentContext& component_context
-    ) : ComponentBase(config, component_context) {
-        user_repository_ = std::shared_ptr<repositories::UserRepository>(
+    ) : ComponentBase(config, component_context),
+        user_repository_(std::shared_ptr<repositories::UserRepository>(
             new repositories::users::UserRepositoryPostgres(component_context.FindComponent<userver::components::Postgres>("postgres-db").GetCluster())
-        );
-    }
+        )) {}
 
     std::shared_ptr<repositories::UserRepository> GetUserRepository() const;
 

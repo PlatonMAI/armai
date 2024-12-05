@@ -9,8 +9,7 @@
 
 #include "hello.hpp"
 
-#include <application/handlers/users/register/view.hpp>
-
+#include <application/handlers/appendHandlers.hpp>
 #include <infrastructure/components/repositories/appendRepositories.hpp>
 
 int main(int argc, char* argv[]) {
@@ -24,9 +23,9 @@ int main(int argc, char* argv[]) {
 
   armai::AppendHello(component_list);
   
-  armai::application::handlers::AppendUsersRegister(component_list);
+  armai::application::handlers::AppendHandlers(component_list);
 
-  armai::infrastructure::components::AppendUserRepository(component_list);
+  armai::infrastructure::components::AppendRepositories(component_list);
 
   return userver::utils::DaemonMain(argc, argv, component_list);
 }

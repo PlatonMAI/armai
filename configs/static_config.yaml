@@ -59,6 +59,22 @@ components_manager:
             path: /users/register
             method: POST
             task_processor: main-task-processor
+        handler-users-auth:
+            path: /users/auth
+            method: POST
+            task_processor: main-task-processor
+        handler-users-register:
+            path: /users/register
+            method: POST
+            task_processor: main-task-processor
+        handler-users-logout:
+            path: /users/logout
+            method: GET
+            task_processor: main-task-processor
+        handler-users-me:
+            path: /users/me
+            method: GET
+            task_processor: main-task-processor
 
 
         postgres-db:

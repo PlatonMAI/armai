@@ -30,13 +30,33 @@ add_library(${PROJECT_NAME}_objs OBJECT
     src/hello.cpp
 
 
+    src/application/handlers/appendHandlers.hpp
+    src/application/handlers/appendHandlers.cpp
     src/application/handlers/users/register/view.hpp
     src/application/handlers/users/register/view.cpp
+    src/application/handlers/users/auth/view.hpp
+    src/application/handlers/users/auth/view.cpp
+    src/application/handlers/users/logout/view.hpp
+    src/application/handlers/users/logout/view.cpp
+    src/application/handlers/users/me/view.hpp
+    src/application/handlers/users/me/view.cpp
 
+    src/application/utils/auth.hpp
+    src/application/utils/auth.cpp
+    
     src/application/dto/users/userRegisterCommand.hpp
+    src/application/dto/users/userAuthCommand.hpp
 
-    src/application/mappers/users/requestToUserRegisterCommand.hpp
-    src/application/mappers/users/requestToUserRegisterCommand.cpp
+    src/application/mappers/users/request/userRegisterCommand.hpp
+    src/application/mappers/users/request/userRegisterCommand.cpp
+    src/application/mappers/users/request/userAuthCommand.hpp
+    src/application/mappers/users/request/userAuthCommand.cpp
+    src/application/mappers/users/json/user.hpp
+    src/application/mappers/users/json/user.cpp
+    src/application/mappers/users/json/userQuery.hpp
+    src/application/mappers/users/json/userQuery.cpp
+    src/application/mappers/users/userDomainQuery.hpp
+    src/application/mappers/users/userDomainQuery.cpp
 
     
     src/infrastructure/repositories/users/userRepository.hpp
@@ -50,13 +70,20 @@ add_library(${PROJECT_NAME}_objs OBJECT
     src/infrastructure/components/repositories/userRepositoryComponent.cpp
     
     src/infrastructure/queries/users/usersRead.hpp
+    src/infrastructure/queries/users/usersCreate.hpp
 
+    src/infrastructure/mappers/users/parameterStore/usersCreate.hpp
+    src/infrastructure/mappers/users/parameterStore/usersCreate.cpp
+    src/infrastructure/mappers/postgres/sex.hpp
 
-    src/domain/domain.hpp
-    src/domain/domain.cpp
 
     src/domain/users/user.hpp
     src/domain/users/users.hpp
+
+    src/domain/utils/auth.hpp
+    src/domain/utils/auth.cpp
+    src/domain/utils/jwt.hpp
+    src/domain/utils/jwt.cpp
 )
 target_link_libraries(${PROJECT_NAME}_objs PUBLIC userver::postgresql)
 
@@ -98,9 +125,15 @@ file(GLOB CONFIGS_FILES ${CMAKE_CURRENT_SOURCE_DIR}/configs/*.yaml ${CMAKE_CURRE
 install(TARGETS ${PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT ${PROJECT_NAME})
 install(FILES ${CONFIGS_FILES} DESTINATION ${CMAKE_INSTALL_SYSCONFDIR}/${PROJECT_NAME} COMPONENT ${PROJECT_NAME})
 
+# jwt-cpp
 add_subdirectory(third_party/jwt-cpp)
 target_link_libraries(${PROJECT_NAME} PRIVATE jwt-cpp)
 include_directories(third_party/jwt-cpp/include)
+
+# picojson
+# add_subdirectory(third_party/picojson)
+# target_link_libraries(${PROJECT_NAME} PRIVATE picojson)
+# include_directories(third_party/picojson)
 
 # include src
 include_directories(src)

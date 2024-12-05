@@ -4,6 +4,6 @@
 
 namespace armai::application::handlers {
 
-void AppendUsersRegister(userver::components::ComponentList &component_list);
+void AppendUsersAuth(userver::components::ComponentList &component_list);
 
 } // namespace armai::application::handlers

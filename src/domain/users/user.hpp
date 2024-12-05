@@ -5,10 +5,15 @@
 #include "users.hpp"
 
 namespace armai::domain::users {
-    class User {
-        uint id;
-        std::string name;
-        kSex sex;
-        userver::utils::datetime::Date birth;
-    };
-}
+
+struct User {
+    int id;
+    std::string email;
+    std::string password;
+    std::string name;
+    Sex sex;
+    userver::utils::datetime::Date birth;
+    bool isAdmin;
+};
+
+} // namespace armai::domain::users

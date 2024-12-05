@@ -4,16 +4,16 @@
 
 #include <userver/utils/datetime/date.hpp>
 
-#include "../../../domain/users/users.hpp"
+#include <domain/users/users.hpp>
 
 namespace armai::application::dto::users {
 
-struct UserRegisterCommand {
-    std::string email;
-    std::string password;
+struct UserQuery {
+    int id;
     std::string name;
-    std::string sex;
+    domain::users::Sex sex;
     userver::utils::datetime::Date birth;
+    bool isAdmin;
 };
 
 } // namespace armai::application::dto::users
