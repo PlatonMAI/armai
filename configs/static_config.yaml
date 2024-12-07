@@ -12,8 +12,11 @@ components_manager:
     components:                       # Configuring components that were registered via component_list
         server:
             listener:                 # configuring the main listening socket...
-                port: $server-port            # ...to listen on this port and...
+                port: 8001            # ...to listen on this port and...
                 task_processor: main-task-processor    # ...process incoming requests on this task processor.
+            listener-monitor:
+                port: 8000
+                task_processor: main-task-processor
         logging:
             fs-task-processor: fs-task-processor
             loggers:
@@ -63,10 +66,6 @@ components_manager:
             path: /users/auth
             method: POST
             task_processor: main-task-processor
-        handler-users-register:
-            path: /users/register
-            method: POST
-            task_processor: main-task-processor
         handler-users-logout:
             path: /users/logout
             method: GET
@@ -74,6 +73,15 @@ components_manager:
         handler-users-me:
             path: /users/me
             method: GET
+            task_processor: main-task-processor
+        handler-users-id:
+            path: /users/{id}
+            method: GET
+            task_processor: main-task-processor
+
+        handler-category_schemas:
+            path: /category_schemas
+            method: POST,GET,DELETE
             task_processor: main-task-processor
 
 
@@ -85,5 +93,22 @@ components_manager:
             sync-start: true
 
 
+        fs-cache-component:
+            fs-task-processor: main-task-processor
+            dir: /workspaces/armai/static
+        handler-static:
+            path: /*
+            method: GET
+            task_processor: main-task-processor
+
+
+        handler-log-level:
+            path: /service/log-level/{level}
+            method: GET,PUT
+            task_processor: main-task-processor
+
+
         user-repository-component:
+            load-enabled: true
+        category-schema-repository-component:
             load-enabled: true

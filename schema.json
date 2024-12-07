@@ -1,0 +1,88 @@
+[
+    {
+        "sex": "male",
+        "schema": [
+            {
+                "age": 18,
+                "schema": [
+                    {
+                        "weight": 60,
+                        "schema": []
+                    },
+                    {
+                        "weight": 70,
+                        "schema": []
+                    },
+                    {
+                        "weight": null,
+                        "schema": []
+                    }
+                ]
+            },
+            {
+                "age": null,
+                "schema": [
+                    {
+                        "weight": 70,
+                        "schema": []
+                    },
+                    {
+                        "weight": 90,
+                        "schema": []
+                    },
+                    {
+                        "weight": 110,
+                        "schema": []
+                    },
+                    {
+                        "weight": null,
+                        "schema": []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "sex": "female",
+        "schema": [
+            {
+                "age": 18,
+                "schema": [
+                    {
+                        "weight": 50,
+                        "schema": []
+                    },
+                    {
+                        "weight": 60,
+                        "schema": []
+                    },
+                    {
+                        "weight": null,
+                        "schema": []
+                    }
+                ]
+            },
+            {
+                "age": null,
+                "schema": [
+                    {
+                        "weight": 50,
+                        "schema": []
+                    },
+                    {
+                        "weight": 60,
+                        "schema": []
+                    },
+                    {
+                        "weight": 70,
+                        "schema": []
+                    },
+                    {
+                        "weight": null,
+                        "schema": []
+                    }
+                ]
+            }
+        ]
+    }
+]

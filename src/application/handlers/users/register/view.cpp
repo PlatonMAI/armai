@@ -3,6 +3,7 @@
 #include <userver/components/component_config.hpp>
 #include <userver/components/component_context.hpp>
 #include <userver/formats/json.hpp>
+#include <userver/logging/log.hpp>
 #include <userver/server/handlers/http_handler_base.hpp>
 
 #include <application/utils/auth.hpp>
@@ -33,6 +34,8 @@ public:
 		const userver::server::http::HttpRequest &request,
 		userver::server::request::RequestContext &
 	) const override {
+		LOG_WARNING() << "UsersRegister: start";
+
 		auto &response = request.GetHttpResponse();
 
 		if (utils::auth::checkExistsJwt(request)) {
@@ -42,6 +45,7 @@ public:
 
 		const auto bodyJson = userver::formats::json::FromString(request.RequestBody());
 		auto userRegisterCommand = mappers::users::request::getUserRegisterCommand(bodyJson);
+		LOG_WARNING() << "UsersRegister: userRegisterCommand: " << userRegisterCommand.email << ", " << userRegisterCommand.password << ", " << userRegisterCommand.name << ", " << userRegisterCommand.sex << ", " << userRegisterCommand.birth;
 
 		const auto existingUser = userRepository->getUserByEmail(userRegisterCommand.email);
 		if (existingUser.has_value()) {

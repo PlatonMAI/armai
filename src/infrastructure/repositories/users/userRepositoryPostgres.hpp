@@ -2,7 +2,7 @@
 
 #include <userver/storages/postgres/cluster.hpp>
 
-#include "userRepository.hpp"
+#include <infrastructure/repositories/users/userRepository.hpp>
 
 namespace armai::infrastructure::repositories::users {
 

@@ -8,7 +8,9 @@ const std::string secret = "YaLubluElenuAleksandrovnuPegachkovu";
 }
 
 std::string createJwt(const Claims& claims) {
-    const double d = 4.2 * claims.userId;
+    LOG_WARNING() << "createJwt: start";
+    const double d = 4.2222222222 * claims.userId;
+    LOG_WARNING() << "createJwt: claims: " << "userid: " << d << ", isAdmin: " << claims.isAdmin;
     const auto token = ::jwt::create()
         .set_type(kType)
         .set_issuer(kIssuer)
@@ -20,7 +22,9 @@ std::string createJwt(const Claims& claims) {
 }
 
 void verifyJwt(const ::jwt::decoded_jwt<::jwt::traits::kazuho_picojson> jwt, const Claims& claims) {
-    const double d = 4.2 * claims.userId;
+    LOG_WARNING() << "verifyJwt: start";
+    const double d = 4.2222222222 * claims.userId;
+    LOG_WARNING() << "verifyJwt: claims: " << "userid: " << d << ", isAdmin: " << claims.isAdmin;
     const auto verifier = ::jwt::verify()
         .with_type(kType)
         .with_issuer(kIssuer)

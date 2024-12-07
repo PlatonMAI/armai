@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="js/redirectAuth.js" type="module"></script>
+
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/form.css">
+
+    <title>Регистрация</title>
+</head>
+<body>
+    <form class="form-container" id="reg">
+        <h2>Регистрация</h2>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" required placeholder="Введите email">
+        </div>
+        <div class="form-group">
+            <label for="password">Пароль</label>
+            <input type="password" name="password" id="password" required placeholder="Введите пароль">
+        </div>
+        <div class="form-group">
+            <label for="confirm-password">Подтверждение пароля</label>
+            <input type="password" name="confirm-password" id="confirm-password" required placeholder="Подтвердите пароль">
+        </div>
+        <div class="form-group">
+            <label for="name">Имя</label>
+            <input type="text" name="name" id="name" required placeholder="Введите имя">
+        </div>
+        <div class="form-group">
+            <label>Пол</label>
+            <div class="gender-group">
+                <label><input type="radio" name="sex" value="male" required> Мужской</label>
+                <label><input type="radio" name="sex" value="female" required> Женский</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="birth">Дата рождения</label>
+            <input type="date" name="birth" id="birth" required>
+        </div>
+        <button>Зарегистрироваться</button>
+        <div class="switch-link">
+            <a href="/auth.html">Уже есть аккаунт? Войти</a>
+        </div>
+    </form>
+
+    <script src="js/reg.js"></script>
+</body>
+</html>

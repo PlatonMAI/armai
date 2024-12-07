@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="js/redirectAuth.js" type="module"></script>
+
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/form.css">
+
+    <title>Авторизация</title>
+</head>
+<body>
+    <form class="form-container" id="auth">
+        <h2>Авторизация</h2>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" required placeholder="Введите email">
+        </div>
+        <div class="form-group">
+            <label for="password">Пароль</label>
+            <input type="password" name="password" id="password" required placeholder="Введите пароль">
+        </div>
+        <button>Войти</button>
+        <div class="switch-link">
+            <a href="/reg.html">Нет аккаунта? Зарегистрироваться</a>
+        </div>
+    </form>
+
+    <script src="js/auth.js"></script>
+</body>
+</html>

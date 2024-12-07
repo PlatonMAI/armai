@@ -20,15 +20,15 @@ namespace armai::application::handlers {
 	
 namespace {
 
-class UsersMe final : public userver::server::handlers::HttpHandlerBase {
+class UsersId final : public userver::server::handlers::HttpHandlerBase {
 private:
 	using UserRepository = armai::infrastructure::repositories::UserRepository;
 	std::shared_ptr<UserRepository> userRepository;
 
 public:
-	static constexpr std::string_view kName = "handler-users-me";
+	static constexpr std::string_view kName = "handler-users-id";
 
-	UsersMe(
+	UsersId(
 		const userver::components::ComponentConfig& config,
 		const userver::components::ComponentContext& component_context
 	) : HttpHandlerBase(config, component_context),
@@ -46,9 +46,9 @@ public:
 		}
 
         const auto jwt = utils::auth::getJwt(request);
-        const auto claims = domain::utils::jwt::decodeJwt(jwt.value());
+        domain::utils::jwt::decodeJwt(jwt.value());
 
-        const auto user = userRepository->getUserById(claims.userId);
+        const auto user = userRepository->getUserById(std::stoi(request.GetPathArg(0)));
         if (!user.has_value()) {
             response.SetStatus(userver::server::http::HttpStatus::kNotFound);
 			return {};
@@ -66,8 +66,8 @@ public:
 
 } // namespace
 
-void AppendUsersMe(userver::components::ComponentList &component_list) {
-	component_list.Append<UsersMe>();
+void AppendUsersId(userver::components::ComponentList &component_list) {
+	component_list.Append<UsersId>();
 }
 
 } // namespace armai::application::handlers
