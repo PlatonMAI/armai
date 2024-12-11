@@ -83,6 +83,10 @@ components_manager:
             path: /category_schemas
             method: POST,GET,DELETE
             task_processor: main-task-processor
+        handler-category_schemas-id:
+            path: /category_schemas/{id}
+            method: GET
+            task_processor: main-task-processor
 
 
         postgres-db:
@@ -111,4 +115,6 @@ components_manager:
         user-repository-component:
             load-enabled: true
         category-schema-repository-component:
+            load-enabled: true
+        category-repository-component:
             load-enabled: true

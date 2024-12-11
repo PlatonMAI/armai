@@ -12,14 +12,16 @@ namespace armai::domain::categorySchemas {
 
 using Category = domain::categories::Category;
 
-enum Field { kSchema, kSex, kAge, kWeight };
+enum Field { kName, kSchema, kSex, kAge, kWeight };
 const std::unordered_map<Field, std::string> kStrFromField{
+    {kName, "name"},
     {kSchema, "schema"},
     {kSex, "sex"},
     {kAge, "age"},
     {kWeight, "weight"}
 };
 const std::unordered_map<std::string, Field> kFieldFromStr{
+    {"name", kName},
     {"schema", kSchema},
     {"sex", kSex},
     {"age", kAge},

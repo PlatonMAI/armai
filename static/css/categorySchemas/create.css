@@ -1,0 +1,35 @@
+body {
+    height: auto !important;
+}
+
+.form-container {
+    max-width: 800px;
+}
+
+.form-group, .group {
+    margin-bottom: 10px;
+}
+.groups {
+    margin-bottom: 20px;
+}
+.age-groups, .weight-groups {
+    margin-left: 50px;
+}
+
+.input-group input {
+    width: auto;
+}
+
+button {
+    margin: 0px 0 0px 0;
+}
+button.manipulation {
+    max-width: 300px;
+}
+button.delete {
+    background-color: crimson;
+}
+
+.inactive {
+    display: none;
+}

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <optional>
+#include <vector>
 
 #include <domain/categorySchemas/categorySchema.hpp>
 #include <application/dto/categorySchemas/categorySchemaCreateCommand.hpp>
@@ -12,9 +13,10 @@ public:
     using CategorySchema = domain::categorySchemas::CategorySchema;
     using CategorySchemaCreateCommand = application::dto::categorySchemas::CategorySchemaCreateCommand;
 
-    // virtual std::optional<UserDomain> getUserById(const int) const;
+    virtual int createSchema(const CategorySchemaCreateCommand&, const int ownerId) const;
 
-    virtual int createSchema(const CategorySchemaCreateCommand&) const;
+    virtual std::vector<CategorySchema> getSchemas() const;
+    virtual std::optional<CategorySchema> getSchema(const int) const;
 };
 
 } // namespace armai::infrastructure::repositories

@@ -1,4 +1,4 @@
-#include "user.hpp"
+#include "json.hpp"
 
 #include <userver/formats/json/inline.hpp>
 
@@ -10,7 +10,17 @@ userver::formats::json::Value toJson(const UserDomain& user) {
         "email", user.email,
         "password", user.password,
         "name", user.name,
-        // "sex", user.sex,
+        "sex", domain::users::kStringFromSex.at(user.sex),
+        "birth", userver::utils::datetime::ToString(user.birth),
+        "isAdmin", user.isAdmin
+    );
+}
+
+userver::formats::json::Value toJson(const UserQuery& user) {
+    return userver::formats::json::MakeObject(
+        "id", user.id,
+        "name", user.name,
+        "sex", domain::users::kStringFromSex.at(user.sex),
         "birth", userver::utils::datetime::ToString(user.birth),
         "isAdmin", user.isAdmin
     );

@@ -7,10 +7,11 @@
 #include <userver/server/handlers/http_handler_base.hpp>
 #include <userver/server/http/http_method.hpp>
 
-#include <domain/utils/jwt.hpp>
 #include <infrastructure/components/repositories/categorySchemaRepositoryComponent.hpp>
+#include <infrastructure/components/repositories/categoryRepositoryComponent.hpp>
 #include <application/utils/auth.hpp>
 #include <application/utils/categorySchemas.hpp>
+#include <domain/utils/jwt.hpp>
 
 namespace armai::application::handlers {
 	
@@ -18,8 +19,10 @@ namespace {
 
 class CategorySchemas final : public userver::server::handlers::HttpHandlerBase {
 private:
-	using CategorySchemaRepository = armai::infrastructure::repositories::CategorySchemaRepository;
+	using CategorySchemaRepository = infrastructure::repositories::CategorySchemaRepository;
 	std::shared_ptr<CategorySchemaRepository> categorySchemaRepository;
+	using CategoryRepository = infrastructure::repositories::CategoryRepository;
+	std::shared_ptr<CategoryRepository> categoryRepository;
 
 public:
 	static constexpr std::string_view kName = "handler-category_schemas";
@@ -28,7 +31,8 @@ public:
 		const userver::components::ComponentConfig& config,
 		const userver::components::ComponentContext& component_context
 	) : HttpHandlerBase(config, component_context),
-		categorySchemaRepository( component_context.FindComponent<armai::infrastructure::components::CategorySchemaRepositoryComponent>().GetCategorySchemaRepository() ) {}
+		categorySchemaRepository( component_context.FindComponent<armai::infrastructure::components::CategorySchemaRepositoryComponent>().GetCategorySchemaRepository() ),
+		categoryRepository( component_context.FindComponent<armai::infrastructure::components::CategoryRepositoryComponent>().GetCategoryRepository() ) {}
 
 	std::string HandleRequestThrow(
 		const userver::server::http::HttpRequest &request,
@@ -49,7 +53,12 @@ public:
 		switch (request.GetMethod()) {
 			case userver::server::http::HttpMethod::kPost:
 				LOG_WARNING() << "CategorySchemas: kPost";
-				return utils::categorySchemas::createCategorySchema(request, claims.userId);
+				response.SetHeader((std::string)"Content-Type", (std::string)"application/json");
+				return utils::categorySchemas::createCategorySchema(request, claims.userId, categorySchemaRepository, categoryRepository);
+			case userver::server::http::HttpMethod::kGet:
+				LOG_WARNING() << "CategorySchemas: kGet";
+				response.SetHeader((std::string)"Content-Type", (std::string)"application/json");
+				return utils::categorySchemas::getCategorySchemas(categorySchemaRepository);
 			default:
 				throw userver::server::handlers::ClientError(
 					userver::server::handlers::ExternalBody{fmt::format("Unsupported method {}", request.GetMethod())}

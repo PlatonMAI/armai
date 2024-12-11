@@ -14,8 +14,7 @@ create table category_schemas
 (
     id SERIAL primary key,
     owner_id INT not null references users (id),
-    name VARCHAR(255) not null,
-    schema JSON not null
+    name VARCHAR(255) not null
 );
 create table categories
 (

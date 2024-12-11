@@ -1,6 +1,5 @@
 #pragma once
 
-#include <string>
 #include <optional>
 
 #include <domain/users/users.hpp>
@@ -10,7 +9,6 @@ namespace armai::domain::categories {
 struct Category {
     std::optional<int> id;
     std::optional<int> schemaId;
-    std::optional<std::string> name;
     
     std::optional<users::Sex> sex;
     std::optional<int> ageMin;

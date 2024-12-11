@@ -18,4 +18,4 @@ const userver::storages::postgres::Query kSelectUserById{
     userver::storages::postgres::Query::Name{"select_user_by_id"}
 };
 
-} // namespace armai::infrastructure::repositories
+} // namespace armai::infrastructure::queries::users

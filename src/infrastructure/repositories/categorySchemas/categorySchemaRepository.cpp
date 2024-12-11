@@ -8,7 +8,15 @@ namespace armai::infrastructure::repositories {
 //     throw std::exception();
 // }
 
-int CategorySchemaRepository::createSchema(const CategorySchemaCreateCommand&) const {
+int CategorySchemaRepository::createSchema(const CategorySchemaCreateCommand&, const int) const {
+    throw std::exception();
+}
+
+std::vector<CategorySchemaRepository::CategorySchema> CategorySchemaRepository::getSchemas() const {
+    throw std::exception();
+}
+
+std::optional<CategorySchemaRepository::CategorySchema> CategorySchemaRepository::getSchema(const int) const {
     throw std::exception();
 }
 

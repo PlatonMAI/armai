@@ -92,7 +92,6 @@ void parseSchemaJson(
         categories.push_back({
             std::nullopt,
             std::nullopt,
-            std::nullopt,
 
             sex,
             ageMin,

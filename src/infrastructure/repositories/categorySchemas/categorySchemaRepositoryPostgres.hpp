@@ -10,9 +10,10 @@ class CategorySchemaRepositoryPostgres : public CategorySchemaRepository {
 public:
     CategorySchemaRepositoryPostgres(const userver::storages::postgres::ClusterPtr pg_cluster) : pg_cluster_(pg_cluster) {}
 
-    // std::optional<UserDomain> getUserById(const int) const override final;
+    virtual int createSchema(const CategorySchemaCreateCommand&, const int ownerId) const override final;
 
-    virtual int createSchema(const CategorySchemaCreateCommand&) const override final;
+    virtual std::vector<CategorySchema> getSchemas() const override final;
+    virtual std::optional<CategorySchema> getSchema(const int) const override final;
 
 private:
     userver::storages::postgres::ClusterPtr pg_cluster_;

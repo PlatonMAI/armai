@@ -9,12 +9,12 @@
 #include <userver/server/handlers/http_handler_base.hpp>
 
 #include <application/utils/auth.hpp>
-#include <application/mappers/users/request/userAuthCommand.hpp>
-#include <application/mappers/users/userDomainQuery.hpp>
+#include <application/mappers/users/request.hpp>
+#include <application/mappers/users/dto.hpp>
 #include <infrastructure/components/repositories/userRepositoryComponent.hpp>
 #include <domain/utils/auth.hpp>
 #include <domain/utils/jwt.hpp>
-#include <application/mappers/users/json/userQuery.hpp>
+#include <application/mappers/users/json.hpp>
 
 namespace armai::application::handlers {
 	
@@ -54,7 +54,7 @@ public:
 			return {};
         }
 
-        const auto userQuery = mappers::users::toQuery(user.value());
+        const auto userQuery = mappers::users::dto::queryFromDomain(user.value());
 
         response.SetHeader((std::string)"Content-Type", (std::string)"application/json");
 

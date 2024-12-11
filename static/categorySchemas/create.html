@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="/js/redirectNotAuth.js" type="module"></script>
+
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/form.css">
+    <link rel="stylesheet" href="/css/categorySchemas/create.css">
+
+    <title>Создание схемы категорий</title>
+</head>
+<body>
+    <div class="inactive">
+        <div class="group sex-group">
+            <div class="form-group">
+                <label>Пол</label>
+                <select>
+                    <option value="" selected> - </option>
+                    <option value="male">Мужской</option>
+                    <option value="female">Женский</option>
+                </select>
+            </div>
+
+            <div class="groups age-groups">
+                <div class="group age-group">
+                    <div class="form-group">
+                        <label>Возраст (лет)</label>
+                        <div class="input-group">
+                            <input type="number" placeholder="От">
+                            -
+                            <input type="number" placeholder="До">
+                        </div>
+                    </div>
+                
+                    <div class="groups weight-groups">
+                        <div class="group weight-group">
+                            <div class="form-group">
+                                <label>Вес (кг)</label>
+                                <div class="input-group">
+                                    <input type="number" placeholder="От">
+                                    -
+                                    <input type="number" placeholder="До">
+                                </div>
+                            </div>
+
+                            <button class="manipulation delete delete-weight">Удалить данную весовую категорию</button>
+                        </div>
+
+                        <button class="manipulation add add-weight">Добавить весовую категорию</button>
+                    </div>
+                    
+                    <button class="manipulation delete delete-age">Удалить данную возрастную группу</button>
+                </div>
+
+                <button class="manipulation add add-age">Добавить возрастную группу</button>
+            </div>
+
+            <button class="manipulation delete delete-sex">Удалить данный пол</button>
+        </div>
+    </div>
+
+    <form class="form-container" id="form-category">
+        <h2>Новая схема категорий</h2>
+
+        <div class="form-group">
+            <label for="name">Имя схемы (будет отображаться в списке)</label>
+            <input type="name" name="name" id="name" required placeholder="Введите имя схемы категорий...">
+        </div>
+
+        <div class="groups sex-groups">
+            <button class="manipulation add add-sex">Добавить пол</button>
+        </div>
+
+        <button>Создать схему</button>
+    </form>
+
+    <script src="/js/categorySchemas/create.js"></script>
+</body>
+</html>

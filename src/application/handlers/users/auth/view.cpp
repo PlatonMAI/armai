@@ -7,7 +7,7 @@
 #include <userver/server/handlers/http_handler_base.hpp>
 
 #include <application/utils/auth.hpp>
-#include <application/mappers/users/request/userAuthCommand.hpp>
+#include <application/mappers/users/request.hpp>
 #include <infrastructure/components/repositories/userRepositoryComponent.hpp>
 #include <domain/utils/auth.hpp>
 #include <domain/utils/jwt.hpp>
