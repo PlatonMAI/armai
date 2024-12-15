@@ -14,5 +14,7 @@ let json = await response.json();
 document.querySelector("#name").innerText = json["name"];
 document.querySelector("#sex").innerText = json["sex"];
 document.querySelector("#birth").innerText = json["birth"];
+document.querySelector("#winsArmfights").innerText = json["winsArmfights"];
+document.querySelector("#winsCompetitions").innerText = json["winsCompetitions"];
 
 }
