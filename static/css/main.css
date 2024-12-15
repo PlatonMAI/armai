@@ -1,0 +1,15 @@
+.flex {
+    display: flex;
+}
+
+.bold {
+    font-weight: 700;
+}
+
+.inactive {
+    display: none;
+}
+
+button {
+    cursor: pointer;
+}

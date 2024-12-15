@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="/js/redirectNotAuth.js" type="module"></script>
+
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/competitions/main.css">
+
+    <title>Соревнования</title>
+</head>
+<body>
+    <div>
+        <a href="/competitions_/create.html">Создать соревнование</a>
+        <a href="/index.html">На главную</a>
+        <a href="/me.html">Личный кабинет</a>
+        <a href="/logout.html">Выйти</a>
+    </div>
+
+    <div class="wrapper-filter">
+        <span>Статус соревнований: </span>
+        <select id="select-status">
+            <option value="" selected>Все статусы</option>
+            <option value="registration">Идет регистрация</option>
+            <option value="confirmation">Идет подтверждение участия</option>
+            <option value="weighing">Идет взвешивание</option>
+            <option value="inProcess">В процессе</option>
+            <option value="finished">Завершено</option>
+        </select>
+    </div>
+
+    <li class="inactive competition">
+        <h3><a href=""></a></h3>
+    </li>
+
+    <ul></ul>
+
+    <script src="/js/competitions/index.js"></script>
+</body>
+</html>

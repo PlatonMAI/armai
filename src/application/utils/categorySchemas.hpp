@@ -14,7 +14,7 @@ std::string createCategorySchema(
 );
 
 std::string getCategorySchemas(
-    const std::shared_ptr<infrastructure::repositories::CategorySchemaRepository> categorySchemaRepository
+    const std::shared_ptr<infrastructure::repositories::CategorySchemaRepository>
 );
 
 } // namespace armai::application::utils::categorySchemas

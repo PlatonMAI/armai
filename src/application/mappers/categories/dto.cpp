@@ -15,6 +15,7 @@ CategoryCreateCommand createCommandFromDomain(const CategoryDomain& categoryDoma
 
 CategoryQuery queryFromDomain(const CategoryDomain& categoryDomain) {
     return {
+        categoryDomain.id.value(),
         categoryDomain.sex,
         categoryDomain.ageMin,
         categoryDomain.ageMax,

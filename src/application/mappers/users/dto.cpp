@@ -8,7 +8,9 @@ UserQuery queryFromDomain(const UserDomain& user) {
         user.name,
         user.sex,
         user.birth,
-        user.isAdmin
+        user.isAdmin,
+        user.winsArmfights,
+        user.winsCompetitions
     };
 }
 

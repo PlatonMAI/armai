@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="/js/redirectNotAuth.js" type="module"></script>
+
+    <link rel="stylesheet" href="/css/main.css">
+
+    <title>Соревнование</title>
+</head>
+<body>
+    <a href="/competitions.html">Соревнования</a>
+    <a href="/index.html">На главную</a>
+    <a href="/me.html">Личный кабинет</a>
+    <a href="/logout.html">Выйти</a>
+
+    <h3 id="name"></h3>
+    <div class="flex">
+        <div>статус: </div>
+        <div id="status" class="bold"></div>
+    </div>
+
+    <div><button id="status-change" class="inactive"></button></div>
+
+    <div id="registration-group" class="inactive">
+        <div id="registration-user">
+            <a class="inactive">Зарегистрироваться на соревнование</a>
+            <div class="inactive">Вы зарегистрированы на это соревнование</div>
+        </div>
+        <div id="registration-users">
+            <h4>Зарегистированные пользователи:</h4>
+            <ul>
+                <li class="inactive">
+                    <a class="user-name"></a>
+                    <span class="user-team inactive">от команды <a></a></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="confirmation-group" class="inactive">
+        <div id="confirmation-user">
+            <a class="inactive" href="">Подтвердить участие в соревновании</a>
+            <div class="inactive">Вы уже подтвердили свое участие в соревновании</div>
+        </div>
+        <div id="confirmation-users">
+            <h4>Подтвердившие участие пользователи:</h4>
+            <ul>
+                <li class="inactive">
+                    <a class="user-name"></a>
+                    <span class="user-team inactive">от команды <a></a></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="weighing-group" class="inactive">
+        <div id="weighing-users">
+            <h4>Взвешивание:</h4>
+            <ul>
+                <li class="inactive">
+                    <a class="user-name"></a>
+                    <span class="user-team inactive">от команды <a></a></span>
+                    <span class="user-weighing inactive">
+                        <input type="number">
+                        <button>Записать</button>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="inProcess-group" class="inactive">
+        <li class="inactive category">
+            <a>
+                <span class="sex"></span>
+                <span class="ageMin"></span>
+                <span class="ageMax"></span>
+                <span class="weightMin"></span>
+                <span class="weightMax"></span>
+            </a>
+        </li>
+
+        <ul></ul>
+    </div>
+
+    <div id="finished-group" class="inactive">
+        <li class="inactive category">
+            <a>
+                <span class="sex"></span>
+                <span class="ageMin"></span>
+                <span class="ageMax"></span>
+                <span class="weightMin"></span>
+                <span class="weightMax"></span>
+            </a>
+            <span class="user-info">
+                <span>Победитель:
+                    <a class="user-name"></a>
+                    <span class="user-team inactive">от команды <a></a></span>
+                </span>
+            </span>
+        </li>
+
+        <ul></ul>
+    </div>
+
+    <script src="/js/index.js"></script>
+    <script src="/js/competitions/id.js"></script>
+</body>
+</html>

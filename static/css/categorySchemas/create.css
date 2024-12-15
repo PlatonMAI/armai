@@ -29,7 +29,3 @@ button.manipulation {
 button.delete {
     background-color: crimson;
 }
-
-.inactive {
-    display: none;
-}

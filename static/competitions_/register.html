@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="/js/redirectNotAuth.js" type="module"></script>
+
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/form.css">
+
+    <title>Регистрация на соревнование</title>
+</head>
+<body>
+    <form class="form-container" id="form-reg">
+        <h2>Регистрация</h2>
+        <div class="form-group">
+            <label for="team">Выберите от какой команды будете принимать участие</label>
+            <select name="teamId" id="team">
+                <option value="" selected>Без команды</option>
+            </select>
+        </div>
+        <button>Зарегистрироваться</button>
+    </form>
+
+    <script src="/js/competitions/register.js"></script>
+</body>
+</html>

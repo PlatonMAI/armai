@@ -14,6 +14,8 @@ struct UserQuery {
     domain::users::Sex sex;
     userver::utils::datetime::Date birth;
     bool isAdmin;
+    int winsArmfights;
+    int winsCompetitions;
 };
 
 } // namespace armai::application::dto::users

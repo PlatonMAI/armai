@@ -74,6 +74,10 @@ components_manager:
             path: /users/me
             method: GET
             task_processor: main-task-processor
+        handler-users-me-is_admin:
+            path: /users/me/is_admin
+            method: GET
+            task_processor: main-task-processor
         handler-users-id:
             path: /users/{id}
             method: GET
@@ -85,6 +89,68 @@ components_manager:
             task_processor: main-task-processor
         handler-category_schemas-id:
             path: /category_schemas/{id}
+            method: GET
+            task_processor: main-task-processor
+
+        handler-teams:
+            path: /teams
+            method: POST,GET,DELETE
+            task_processor: main-task-processor
+        handler-teams-id:
+            path: /teams/{id}
+            method: GET
+            task_processor: main-task-processor
+
+        handler-competitions:
+            path: /competitions
+            method: POST,GET,DELETE
+            task_processor: main-task-processor
+        handler-competitions-id:
+            path: /competitions/{id}
+            method: GET
+            task_processor: main-task-processor
+        handler-competitions-id-register:
+            path: /competitions/{id}/register
+            method: POST
+            task_processor: main-task-processor
+        handler-competitions-id-register-check:
+            path: /competitions/{id}/register/check
+            method: GET
+            task_processor: main-task-processor
+        handler-competitions-id-register-users:
+            path: /competitions/{id}/register/users
+            method: GET
+            task_processor: main-task-processor
+        handler-competitions-id-confirmation:
+            path: /competitions/{id}/confirmation
+            method: POST
+            task_processor: main-task-processor
+        handler-competitions-id-confirmation-check:
+            path: /competitions/{id}/confirmation/check
+            method: GET
+            task_processor: main-task-processor
+        handler-competitions-id-confirmation-users:
+            path: /competitions/{id}/confirmation/users
+            method: GET
+            task_processor: main-task-processor
+        handler-competitions-id-weighing:
+            path: /competitions/{id}/weighing
+            method: POST
+            task_processor: main-task-processor
+        handler-competitions-id-categories:
+            path: /competitions/{id}/categories
+            method: GET
+            task_processor: main-task-processor
+        handler-competitions-id-categories-id:
+            path: /competitions/{competition_id}/categories/{category_id}
+            method: POST,GET
+            task_processor: main-task-processor
+        handler-competitions-id-categories-id-winner:
+            path: /competitions/{competition_id}/categories/{category_id}/winner
+            method: GET
+            task_processor: main-task-processor
+        handler-competitions-id-change_status:
+            path: /competitions/{id}/change_status
             method: GET
             task_processor: main-task-processor
 
@@ -117,4 +183,12 @@ components_manager:
         category-schema-repository-component:
             load-enabled: true
         category-repository-component:
+            load-enabled: true
+        team-repository-component:
+            load-enabled: true
+        participant-repository-component:
+            load-enabled: true
+        competition-repository-component:
+            load-enabled: true
+        armfight-repository-component:
             load-enabled: true

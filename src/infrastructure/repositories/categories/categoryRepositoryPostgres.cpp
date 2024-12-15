@@ -22,5 +22,10 @@ std::vector<CategoryRepositoryPostgres::Category> CategoryRepositoryPostgres::ge
 
     return res.AsContainer<std::vector<Category>>(userver::storages::postgres::kRowTag);
 }
+std::vector<CategoryRepositoryPostgres::Category> CategoryRepositoryPostgres::getCategoriesByCompetition(const int competitionId) const {
+    const auto res = pg_cluster_->Execute(userver::storages::postgres::ClusterHostType::kSlave, queries::categories::kSelectAllCategoriesByCompetitionId, competitionId);
+
+    return res.AsContainer<std::vector<Category>>(userver::storages::postgres::kRowTag);
+}
 
 } // namespace armai::infrastructure::repositories::categories

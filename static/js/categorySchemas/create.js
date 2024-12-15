@@ -111,8 +111,9 @@ document.querySelector("#form-category").addEventListener("submit", async functi
 
     if (response.status == 200) {
         alert("Успешно!");
-        console.log(response.body);
-        // window.location.href = "/category_schemas/" + 
+        let responseJson = await response.json();
+        console.log(responseJson);
+        window.location.href = `/categorySchemas/id.html?id=${responseJson["id"]}`;
     } else {
         alert("Что-то пошло не так!");
         console.log(response.status);

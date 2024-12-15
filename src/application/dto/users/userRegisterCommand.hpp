@@ -4,8 +4,6 @@
 
 #include <userver/utils/datetime/date.hpp>
 
-#include "../../../domain/users/users.hpp"
-
 namespace armai::application::dto::users {
 
 struct UserRegisterCommand {

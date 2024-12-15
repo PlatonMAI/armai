@@ -15,6 +15,7 @@ public:
     virtual int createCategory(const CategoryCreateCommand&) const;
 
     virtual std::vector<Category> getCategories(const int) const;
+    virtual std::vector<Category> getCategoriesByCompetition(const int competitionId) const;
 };
 
 } // namespace armai::infrastructure::repositories

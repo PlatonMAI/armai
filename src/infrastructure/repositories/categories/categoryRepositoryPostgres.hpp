@@ -13,6 +13,7 @@ public:
     virtual int createCategory(const CategoryCreateCommand&) const override final;
 
     virtual std::vector<Category> getCategories(const int) const override final;
+    virtual std::vector<Category> getCategoriesByCompetition(const int competitionId) const override final;
 
 private:
     userver::storages::postgres::ClusterPtr pg_cluster_;

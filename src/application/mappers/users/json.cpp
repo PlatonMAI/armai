@@ -22,7 +22,9 @@ userver::formats::json::Value toJson(const UserQuery& user) {
         "name", user.name,
         "sex", domain::users::kStringFromSex.at(user.sex),
         "birth", userver::utils::datetime::ToString(user.birth),
-        "isAdmin", user.isAdmin
+        "isAdmin", user.isAdmin,
+        "winsArmfights", user.winsArmfights,
+        "winsCompetitions", user.winsCompetitions
     );
 }
 

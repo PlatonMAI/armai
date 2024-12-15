@@ -51,7 +51,7 @@ public:
 		}
 
 		const auto jwt = utils::auth::getJwt(request);
-        const auto claims = domain::utils::jwt::decodeJwt(jwt.value());
+        domain::utils::jwt::decodeJwt(jwt.value());
 
 		const auto schema = categorySchemaRepository->getSchema(std::stoi(request.GetPathArg(0)));
         if (!schema.has_value()) {
