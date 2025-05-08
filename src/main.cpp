@@ -6,6 +6,10 @@
 #include <userver/server/handlers/http_handler_static.hpp>
 #include <userver/server/handlers/log_level.hpp>
 #include <userver/storages/postgres/component.hpp>
+#include <userver/storages/redis/client.hpp>
+#include <userver/storages/redis/component.hpp>
+#include <userver/storages/secdist/component.hpp>
+#include <userver/storages/secdist/provider_component.hpp>
 #include <userver/testsuite/testsuite_support.hpp>
 #include <userver/utils/daemon_run.hpp>
 
@@ -23,6 +27,9 @@ int main(int argc, char* argv[]) {
                             .Append<userver::server::handlers::TestsControl>()
                             .Append<userver::components::Postgres>("postgres-db")
                             .Append<userver::components::FsCache>("fs-cache-component")
+                            .Append<userver::components::Secdist>()
+                            .Append<userver::components::DefaultSecdistProvider>()
+                            .Append<userver::components::Redis>("key-value-database")
                             .Append<userver::server::handlers::HttpHandlerStatic>()
                             .Append<userver::server::handlers::LogLevel>();
 

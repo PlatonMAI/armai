@@ -163,6 +163,25 @@ components_manager:
             sync-start: true
 
 
+        key-value-database:
+            groups:
+              - config_name: config_armai  # Key to lookup in secdist configuration
+                db: db_armai           # Name to refer to the cluster in components::Redis::GetClient()
+
+            subscribe_groups:  # Array of redis clusters to work with in subscribe mode
+
+            thread_pools:
+                redis_thread_pool_size: 8
+                sentinel_thread_pool_size: 1
+
+        secdist:
+
+        default-secdist-provider:                        # Component that loads configuration of hosts and passwords
+            config: /workspaces/armai/configs/etc/redis_service/secure_data.json  # Values are supposed to be stored in this file
+            missing-ok: false                             # ... but if the file is missing it is still ok
+            # environment-secrets-key: SECDIST_CONFIG      # ... values will be loaded from this environment value
+
+
         fs-cache-component:
             fs-task-processor: main-task-processor
             dir: /workspaces/armai/static
@@ -191,4 +210,6 @@ components_manager:
         competition-repository-component:
             load-enabled: true
         armfight-repository-component:
+            load-enabled: true
+        redis-repository-component:
             load-enabled: true

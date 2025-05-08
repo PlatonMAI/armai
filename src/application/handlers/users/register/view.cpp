@@ -9,8 +9,10 @@
 #include <application/utils/auth.hpp>
 #include <application/mappers/users/request.hpp>
 #include <infrastructure/components/repositories/userRepositoryComponent.hpp>
+#include <infrastructure/components/repositories/redisRepositoryComponent.hpp>
 #include <domain/utils/auth.hpp>
 #include <domain/utils/jwt.hpp>
+#include <domain/utils/refresh.hpp>
 
 namespace armai::application::handlers {
 	
@@ -19,7 +21,9 @@ namespace {
 class UsersRegister final : public userver::server::handlers::HttpHandlerBase {
 private:
 	using UserRepository = armai::infrastructure::repositories::UserRepository;
+	using RedisRepository = armai::infrastructure::repositories::redis::RedisRepository;
 	std::shared_ptr<UserRepository> userRepository;
+	std::shared_ptr<RedisRepository> redisRepository;
 
 public:
 	static constexpr std::string_view kName = "handler-users-register";
@@ -28,7 +32,8 @@ public:
 		const userver::components::ComponentConfig& config,
 		const userver::components::ComponentContext& component_context
 	) : HttpHandlerBase(config, component_context),
-		userRepository( component_context.FindComponent<armai::infrastructure::components::UserRepositoryComponent>().GetUserRepository() ) {}
+		userRepository( component_context.FindComponent<armai::infrastructure::components::UserRepositoryComponent>().GetUserRepository() ),
+		redisRepository( component_context.FindComponent<armai::infrastructure::components::RedisRepositoryComponent>().GetRedisRepository() ) {}
 
 	std::string HandleRequestThrow(
 		const userver::server::http::HttpRequest &request,
@@ -58,6 +63,10 @@ public:
 
 		const auto jwt = domain::utils::jwt::createJwt({userId, false});
 		response.SetCookie(utils::auth::buildCookieJwt(jwt));
+
+		const auto refresh = domain::utils::refresh::getRefresh(userId);
+		LOG_WARNING() << "Refresh token: " << refresh;
+		LOG_WARNING() << redisRepository->GetValue(userRegisterCommand.email);
 
 		return {};
 	}

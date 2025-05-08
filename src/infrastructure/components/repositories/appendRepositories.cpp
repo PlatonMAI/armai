@@ -7,6 +7,7 @@
 #include <infrastructure/components/repositories/participantRepositoryComponent.hpp>
 #include <infrastructure/components/repositories/competitionRepositoryComponent.hpp>
 #include <infrastructure/components/repositories/armfightRepositoryComponent.hpp>
+#include <infrastructure/components/repositories/redisRepositoryComponent.hpp>
 
 namespace armai::infrastructure::components {
 
@@ -18,6 +19,7 @@ void AppendRepositories(userver::components::ComponentList& component_list) {
     component_list.Append<ParticipantRepositoryComponent>();
     component_list.Append<CompetitionRepositoryComponent>();
     component_list.Append<ArmfightRepositoryComponent>();
+    component_list.Append<RedisRepositoryComponent>();
 }
 
 } // namespace armai::infrastructure::repositories

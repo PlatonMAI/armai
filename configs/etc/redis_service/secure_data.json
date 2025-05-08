@@ -1,0 +1,13 @@
+{
+  "redis_settings": {
+    "config_armai": {
+      "password": "admin",
+      "sentinels": [
+        {"host": "redis-sentinel", "port": 26379}
+      ],
+      "shards": [
+        {"name": "test_master0"}
+      ]
+    }
+  }
+}

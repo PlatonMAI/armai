@@ -16,6 +16,28 @@ services:
         networks:
           - postgres
 
+    redis-sentinel:
+      image: redis:latest
+      command: redis-sentinel /usr/local/etc/redis/sentinel.conf
+      ports:
+        - "26379:26379"
+      volumes:
+        - ${PWD}/configs/sentinel.conf:/usr/local/etc/redis/sentinel.conf
+      depends_on:
+        - redis-master
+      networks:
+        - redis
+
+    redis-master:
+      image: redis:latest
+      command: redis-server --requirepass admin
+      ports:
+        - "6379:6379"
+      volumes:
+        - ./redisdata:/data
+      networks:
+        - redis
+
     armai-container:
         image: ghcr.io/userver-framework/ubuntu-22.04-userver-pg:latest
         privileged: true
@@ -36,7 +58,10 @@ services:
           - postgres
         networks:
           - postgres
+          - redis
 
 networks:
     postgres:
+        driver: bridge
+    redis:
         driver: bridge
