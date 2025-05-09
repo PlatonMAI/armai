@@ -16,9 +16,8 @@
 #include <application/mappers/categories/dto.hpp>
 #include <application/mappers/categories/json.hpp>
 #include <infrastructure/components/repositories/competitionRepositoryComponent.hpp>
-#include <infrastructure/components/repositories/participantRepositoryComponent.hpp>
-#include <infrastructure/components/repositories/userRepositoryComponent.hpp>
 #include <infrastructure/components/repositories/categoryRepositoryComponent.hpp>
+#include <infrastructure/components/repositories/redisRepositoryComponent.hpp>
 #include <domain/utils/jwt.hpp>
 #include <domain/competitions/competitions.hpp>
 
@@ -28,10 +27,9 @@ namespace {
 
 class CompetitionsIdCategories final : public userver::server::handlers::HttpHandlerBase {
 private:
-	using CompetitionRepository = infrastructure::repositories::CompetitionRepository;
-	std::shared_ptr<CompetitionRepository> competitionRepository;
-	using CategoryRepository = infrastructure::repositories::CategoryRepository;
-	std::shared_ptr<CategoryRepository> categoryRepository;
+	std::shared_ptr<infrastructure::repositories::CompetitionRepository> competitionRepository;
+	std::shared_ptr<infrastructure::repositories::CategoryRepository> categoryRepository;
+	std::shared_ptr<infrastructure::repositories::redis::RedisRepository> redisRepository;
 
 public:
 	static constexpr std::string_view kName = "handler-competitions-id-categories";
@@ -41,23 +39,15 @@ public:
 		const userver::components::ComponentContext& component_context
 	) : HttpHandlerBase(config, component_context),
 		competitionRepository( component_context.FindComponent<armai::infrastructure::components::CompetitionRepositoryComponent>().GetCompetitionRepository() ),
-		categoryRepository( component_context.FindComponent<armai::infrastructure::components::CategoryRepositoryComponent>().GetCategoryRepository() ) {}
+		categoryRepository( component_context.FindComponent<armai::infrastructure::components::CategoryRepositoryComponent>().GetCategoryRepository() ),
+		redisRepository( component_context.FindComponent<armai::infrastructure::components::RedisRepositoryComponent>().GetRedisRepository() ) {}
 
 	std::string HandleRequestThrow(
 		const userver::server::http::HttpRequest &request,
 		userver::server::request::RequestContext &
 	) const override {
-		LOG_WARNING() << "CompetitionsIdCategories: start";
-
 		auto &response = request.GetHttpResponse();
-
-		if (!utils::auth::checkExistsJwt(request)) {
-			response.SetStatus(userver::server::http::HttpStatus::kUnauthorized);
-			return {};
-		}
-
-		const auto jwt = utils::auth::getJwt(request);
-        domain::utils::jwt::decodeJwt(jwt.value());
+		utils::auth::checkAuth(request, response, redisRepository);
 
 		const auto competition = competitionRepository->getCompetition(std::stoi(request.GetPathArg(0)));
         if (!competition.has_value()) {

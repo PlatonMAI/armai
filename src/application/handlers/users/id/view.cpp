@@ -12,6 +12,7 @@
 #include <application/mappers/users/request.hpp>
 #include <application/mappers/users/dto.hpp>
 #include <infrastructure/components/repositories/userRepositoryComponent.hpp>
+#include <infrastructure/components/repositories/redisRepositoryComponent.hpp>
 #include <domain/utils/auth.hpp>
 #include <domain/utils/jwt.hpp>
 #include <application/mappers/users/json.hpp>
@@ -22,8 +23,8 @@ namespace {
 
 class UsersId final : public userver::server::handlers::HttpHandlerBase {
 private:
-	using UserRepository = armai::infrastructure::repositories::UserRepository;
-	std::shared_ptr<UserRepository> userRepository;
+	std::shared_ptr<infrastructure::repositories::UserRepository> userRepository;
+	std::shared_ptr<infrastructure::repositories::redis::RedisRepository> redisRepository;
 
 public:
 	static constexpr std::string_view kName = "handler-users-id";
@@ -32,21 +33,15 @@ public:
 		const userver::components::ComponentConfig& config,
 		const userver::components::ComponentContext& component_context
 	) : HttpHandlerBase(config, component_context),
-		userRepository( component_context.FindComponent<armai::infrastructure::components::UserRepositoryComponent>().GetUserRepository() ) {}
+		userRepository( component_context.FindComponent<armai::infrastructure::components::UserRepositoryComponent>().GetUserRepository() ),
+		redisRepository( component_context.FindComponent<armai::infrastructure::components::RedisRepositoryComponent>().GetRedisRepository() ) {}
 
 	std::string HandleRequestThrow(
 		const userver::server::http::HttpRequest &request,
 		userver::server::request::RequestContext &
 	) const override {
 		auto &response = request.GetHttpResponse();
-        
-        if (!utils::auth::checkExistsJwt(request)) {
-			response.SetStatus(userver::server::http::HttpStatus::kUnauthorized);
-			return {};
-		}
-
-        const auto jwt = utils::auth::getJwt(request);
-        domain::utils::jwt::decodeJwt(jwt.value());
+		utils::auth::checkAuth(request, response, redisRepository);
 
         const auto user = userRepository->getUserById(std::stoi(request.GetPathArg(0)));
         if (!user.has_value()) {

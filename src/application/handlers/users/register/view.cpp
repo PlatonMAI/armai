@@ -13,6 +13,7 @@
 #include <domain/utils/auth.hpp>
 #include <domain/utils/jwt.hpp>
 #include <domain/utils/refresh.hpp>
+#include <domain/utils/exceptions/authExceptions/auth.hpp>
 
 namespace armai::application::handlers {
 	
@@ -20,10 +21,8 @@ namespace {
 
 class UsersRegister final : public userver::server::handlers::HttpHandlerBase {
 private:
-	using UserRepository = armai::infrastructure::repositories::UserRepository;
-	using RedisRepository = armai::infrastructure::repositories::redis::RedisRepository;
-	std::shared_ptr<UserRepository> userRepository;
-	std::shared_ptr<RedisRepository> redisRepository;
+	std::shared_ptr<armai::infrastructure::repositories::UserRepository> userRepository;
+	std::shared_ptr<armai::infrastructure::repositories::redis::RedisRepository> redisRepository;
 
 public:
 	static constexpr std::string_view kName = "handler-users-register";
@@ -39,18 +38,12 @@ public:
 		const userver::server::http::HttpRequest &request,
 		userver::server::request::RequestContext &
 	) const override {
-		LOG_WARNING() << "UsersRegister: start";
-
 		auto &response = request.GetHttpResponse();
 
-		if (utils::auth::checkExistsJwt(request)) {
-			response.SetStatus(userver::server::http::HttpStatus::kForbidden);
-			return {};
-		}
+		utils::auth::checkNotAuth(request, response, redisRepository);
 
 		const auto bodyJson = userver::formats::json::FromString(request.RequestBody());
 		auto userRegisterCommand = mappers::users::request::getUserRegisterCommand(bodyJson);
-		LOG_WARNING() << "UsersRegister: userRegisterCommand: " << userRegisterCommand.email << ", " << userRegisterCommand.password << ", " << userRegisterCommand.name << ", " << userRegisterCommand.sex << ", " << userRegisterCommand.birth;
 
 		const auto existingUser = userRepository->getUserByEmail(userRegisterCommand.email);
 		if (existingUser.has_value()) {
@@ -61,12 +54,7 @@ public:
 		userRegisterCommand.password = domain::utils::auth::getHashPassword(userRegisterCommand.password);
 		const auto userId = userRepository->createUser(userRegisterCommand);
 
-		const auto jwt = domain::utils::jwt::createJwt({userId, false});
-		response.SetCookie(utils::auth::buildCookieJwt(jwt));
-
-		const auto refresh = domain::utils::refresh::getRefresh(userId);
-		LOG_WARNING() << "Refresh token: " << refresh;
-		LOG_WARNING() << redisRepository->GetValue(userRegisterCommand.email);
+		utils::auth::auth(userId, false, response, redisRepository);
 
 		return {};
 	}

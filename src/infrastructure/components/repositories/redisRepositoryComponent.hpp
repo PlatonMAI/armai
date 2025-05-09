@@ -3,6 +3,7 @@
 #include <userver/components/component_context.hpp>
 #include <userver/storages/redis/component.hpp>
 
+#include <infrastructure/repositories/redis/redisConfig.hpp>
 #include <infrastructure/repositories/redis/redisRepository.hpp>
 
 namespace armai::infrastructure::components {
@@ -18,11 +19,14 @@ public:
         redis_repository_(std::shared_ptr<repositories::redis::RedisRepository>(
             new repositories::redis::RedisRepository(
                 component_context.FindComponent<userver::components::Redis>("key-value-database").GetClient("db_armai"),
-                userver::storages::redis::CommandControl(std::chrono::seconds{15}, std::chrono::seconds{60}, 4)
+                userver::storages::redis::CommandControl(std::chrono::seconds{15}, std::chrono::seconds{60}, 4),
+                config.As<armai::infrastructure::repositories::redis::RedisConfig>()
             )
         )) {}
 
     std::shared_ptr<repositories::redis::RedisRepository> GetRedisRepository() const;
+
+    static userver::yaml_config::Schema GetStaticConfigSchema();
 
 private:
     std::shared_ptr<repositories::redis::RedisRepository> redis_repository_;

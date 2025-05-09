@@ -213,3 +213,4 @@ components_manager:
             load-enabled: true
         redis-repository-component:
             load-enabled: true
+            ttl-refresh: 2592000000 # 30 дней (в мс)
